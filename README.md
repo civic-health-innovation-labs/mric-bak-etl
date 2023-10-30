@@ -226,4 +226,8 @@ if everything works, this part is done.
 The script is located in `src/bacpac_unload.ps1` - copy and paste this file into some location (optimally into the new directory). Then, fill in all the required configuration variables at the start of the script. After this part is done, all should work (to run the script, just write `.\bacpac_unload.ps1` from the PowerShell console).
 
 ### Setting up the periodic job to run the unloading script
-
+Start the `Task Scheduler` (find it via the Start menu):
+1. Click on `Create Basic Task` (in the `Action` menu).
+2. Choose the required period (probably `Daily`, shorter might cause problems). And follow the wizard.
+3. In `Action`, choose `Start a Program`.
+4. Pass the location of the script as input (you can Browse it).
