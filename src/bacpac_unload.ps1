@@ -27,6 +27,9 @@ foreach ($blob_entry in $az_list_result) {
     $split_list = $blob_entry.split(";")
     $info_str_and_filename = $split_list[0]
     if ($info_str_and_filename.Contains(".bacpac")) {
+        # Every line looks like
+        #   INFO: FileName.whatever
+        #   therefore the string 'INFO: ' needs to be trimmed (length = 6)
         $blob_files_list += $info_str_and_filename.Substring(6)
     }
 }
