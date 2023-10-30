@@ -230,4 +230,4 @@ Start the `Task Scheduler` (find it via the Start menu):
 1. Click on `Create Basic Task` (in the `Action` menu).
 2. Choose the required period (probably `Daily`, shorter might cause problems). And follow the wizard.
 3. In `Action`, choose `Start a Program`.
-4. Pass the location of the script as input (you can Browse it).
+4. As `Program`, write `powershell`, and as `Add argument` write `-File LOCATION_OF_PS1_SCRIPT_FILE` - and fill the location of the script instead of `LOCATION_OF_PS1_SCRIPT_FILE`.
