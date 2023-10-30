@@ -201,3 +201,29 @@ The basic logic of networking:
 
 **VM - FlowEHR network:** To set up the networking between the VM and the FlowEHR instance, go to the VM, select the `Networking` option, click on the `Virtual network/subnet` (this gets you into `Virtual network` resource related to VM - you can get there directly from the resource group as well). There, click on `Peerings` and add a new one. There, write some meaningful names for both peering links (e. g. starting with the prefix `peer`, following `peer-SOURCE-TARGET`), then select the `Virtual network` related to FlowEHR instance. The rest should be in default.
 
+## Setting up the VM
+The goal is:
+ - Install Microsoft Azure Storage Explorer [https://azure.microsoft.com/en-gb/products/storage/storage-explorer](see the Microsoft Azure Storage Explorer tool website here). This is not mandatory, but it makes things much easier as it installs .NET 6 together with the tool that is needed for each of the following tools; it also makes debugging easier.
+ - Install **SqlPackage** tool [https://learn.microsoft.com/en-us/sql/tools/sqlpackage/sqlpackage?view=sql-server-ver16](see the Microsoft SqlPackage tool website here).
+ - Install **AzCopy** [https://learn.microsoft.com/en-us/azure/storage/common/storage-ref-azcopy](see the Microsoft AzCopy website here).
+ - Set up the **script for unloading bacpac** files.
+ - Set up the logic that **calls the script periodically**.
+
+### How do I download things from inside the VM?
+In order to download anything inside the VM, you need to have downloading enabled. To do so, go to the `Internet Options` (just search in the Start menu), then select the `Security` tab, click on `Custom level...`, and in the `Downloads` section, enable `File download`. Another option is to pass files through the clipboard.
+
+_Note: try to use the browser as minimally as possible; optimally, just pass the links to download things. When you load a new page, you always need to add it as a trusted website - otherwise, it does not load. This makes the process rather user-friendly. Another option is to download Firefox and continue from it._
+
+### Setting up AzCopy and SqlPackage tools
+First, after downloading `AzCopy` and `SqlPackage`, add the directory with unzipped content into the PATH variable (on the system level). To do so, go to `Edit the system environment variables` (find it through the Start menu), click on the `Environment Variables...` button, and in the bottom section (called _System variables_) click on the `Path` variable, then click `Edit`, there click on `New` and add the path to the directory with AzCopy (then repeat the same process for SqlPackage). After you finish, save everything (by clicking OK everywhere). Then open a new PowerShell console and try to run the commands:
+```
+sqlpackage /help
+azcopy --help
+```
+if everything works, this part is done.
+
+### Setting up the scripts
+The script is located in `src/bacpac_unload.ps1` - copy and paste this file into some location (optimally into the new directory). Then, fill in all the required configuration variables at the start of the script. After this part is done, all should work (to run the script, just write `.\bacpac_unload.ps1` from the PowerShell console).
+
+### Setting up the periodic job to run the unloading script
+
