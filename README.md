@@ -191,3 +191,13 @@ Instant file initialization: Disabled
 
 ### Important notes:
 - Disable the RDP port once you are finished (at least restrict it to some IP ranges).
+
+## Networking
+The basic logic of networking:
+ - Blob Storage and VM are connected using Service Endpoints.
+ - VM and FlowEHR are connected using Peerings (Virtual Network Peering).
+
+**Blob - VM network:** To set up the networking between the blob and VM, go to the blob, select the `Networking` option, and select `Enabled from selected virtual networks and IP addresses`. Then, in the `Virtual networks` section, select `Add existing virtual network` - there you need to find the VM's virtual network and its subnet. **Important: disable all Exceptions!** 
+
+**VM - FlowEHR network:** To set up the networking between the VM and the FlowEHR instance, go to the VM, select the `Networking` option, click on the `Virtual network/subnet` (this gets you into `Virtual network` resource related to VM - you can get there directly from the resource group as well). There, click on `Peerings` and add a new one. There, write some meaningful names for both peering links (e. g. starting with the prefix `peer`, following `peer-SOURCE-TARGET`), then select the `Virtual network` related to FlowEHR instance. The rest should be in default.
+
