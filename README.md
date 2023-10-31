@@ -196,10 +196,16 @@ Instant file initialization: Disabled
 The basic logic of networking:
  - Blob Storage and VM are connected using Service Endpoints.
  - VM and FlowEHR are connected using Peerings (Virtual Network Peering).
+ - Open outbound port 1433 on the VM's Virtual Network (for any connection).
+ - Make the private IP address static and use it as an endpoint for SQL connection.
 
 **Blob - VM network:** To set up the networking between the blob and VM, go to the blob, select the `Networking` option, and select `Enabled from selected virtual networks and IP addresses`. Then, in the `Virtual networks` section, select `Add existing virtual network` - there you need to find the VM's virtual network and its subnet. **Important: disable all Exceptions!** 
 
-**VM - FlowEHR network:** To set up the networking between the VM and the FlowEHR instance, go to the VM, select the `Networking` option, click on the `Virtual network/subnet` (this gets you into `Virtual network` resource related to VM - you can get there directly from the resource group as well). There, click on `Peerings` and add a new one. There, write some meaningful names for both peering links (e. g. starting with the prefix `peer`, following `peer-SOURCE-TARGET`), then select the `Virtual network` related to FlowEHR instance. The rest should be in default.
+**VM - FlowEHR network:** To set up the networking between the VM and the FlowEHR instance, go to the VM, select the `Networking` option, click on the `Virtual network/subnet` (this gets you into `Virtual network` resource related to VM - you can get there directly from the resource group as well). There, click on `Peerings` and add a new one. There, write some meaningful names for both peering links (e. g. starting with the prefix `peer`, following `peer-SOURCE-TARGET`), then select the `Virtual network` related to FlowEHR instance. The rest should be in default. Then go to the FlowEHR resource group, find the Virtual Network resource and do the same process in the opposite direction.
+
+**Opening outbound port 1433 on the VM's Virtual Network:** Go to the VM resource, click on Networking, go to the _Outbound port rules_ tab. Add a rule with `Any` source, source port `*`, destination `Any`, service `MS SQL`; choose a meaningful name and leave the rest as is.
+
+**Making the private IP address static**: go to VM's network interface, click on the IP Configuration, click on the IP and change Allocation to Static.
 
 ## Setting up the VM
 The goal is:
