@@ -33,18 +33,22 @@ foreach ($blob_entry in $az_list_result) {
         $blob_files_list += $info_str_and_filename.Substring(6)
     }
 }
-if ( $blob_files_list.Length -eq 0 ) {
+if ( $blob_files_list.Count -eq 0 ) {
     # Terminate the script if empty
     Write-Host "There is no .bacpac file in the blob storage"
     Exit
 }
 $sorted_files = $blob_files_list
-if ( $blob_files_list.Length -gt 1 ) {
+if ( $blob_files_list.Count -gt 1 ) {
     # This works correctly only if the array has at least 2 elements
     $sorted_files = ($blob_files_list | Sort-Object -Descending)
+    $latest_file_in_storage = $sorted_files[0]
 }
-# This is the name of the file with the right bacpac (latest version)
-$latest_file_in_storage = $sorted_files[0]
+else {
+    # This is the name of the file with the right bacpac (latest version)
+    $latest_file_in_storage = $sorted_files
+}
+
 Write-Host "Trying to import $latest_file_in_storage"
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
