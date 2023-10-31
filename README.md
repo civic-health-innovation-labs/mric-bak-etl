@@ -196,10 +196,22 @@ Instant file initialization: Disabled
 The basic logic of networking:
  - Blob Storage and VM are connected using Service Endpoints.
  - VM and FlowEHR are connected using Peerings (Virtual Network Peering).
+ - Create an Application Security Group.
+ - Create a private endpoint from Databricks to VM's Virtual Network.
+ - Open outbound port 1433 on the VM's Virtual Network (for any connection).
+ - Open inbound port 1433 on the VM's Virtual Network for Application Security Group only. 
 
 **Blob - VM network:** To set up the networking between the blob and VM, go to the blob, select the `Networking` option, and select `Enabled from selected virtual networks and IP addresses`. Then, in the `Virtual networks` section, select `Add existing virtual network` - there you need to find the VM's virtual network and its subnet. **Important: disable all Exceptions!** 
 
 **VM - FlowEHR network:** To set up the networking between the VM and the FlowEHR instance, go to the VM, select the `Networking` option, click on the `Virtual network/subnet` (this gets you into `Virtual network` resource related to VM - you can get there directly from the resource group as well). There, click on `Peerings` and add a new one. There, write some meaningful names for both peering links (e. g. starting with the prefix `peer`, following `peer-SOURCE-TARGET`), then select the `Virtual network` related to FlowEHR instance. The rest should be in default.
+
+**Application Security Group:** create a new application security group (with some reasonable name). It is a simple process.
+
+**Private endpoint from Databricks to VM's Virtual Network**: Go to the _Azure Databricks Service_ instance in the FlowEHR resource group, click `Networking`, got to the `Private endpoint connections` tab, create a new endpoint. Use meaningful naming (e.g. `pe-SOURCE-TARGET`), in the _Resource tab_, select `databricks_ui_api` as a _Target sub-resource_. In the _Virtual Network_ tab select the VM's _Virtual network_ and _Subnet_; also, select the _Application security group_ created in the previous step (it is located down on the same page). Leave the rest in default. 
+
+**Opening outbound port 1433 on the VM's Virtual Network:** Go to the VM resource, click on Networking, go to the _Outbound port rules_ tab. Add a rule with `Any` source, source port `*`, destination `Any`, service `MS SQL`; choose a meaningful name and leave the rest as is.
+
+**Opening inbound port 1433 on the VM's Virtual Network**: Go to the VM resource, click on Networking, go to the _Inbound port rules_ tab. Add a rule with `Application security group` source, source port `*`, destination `Any`, service `MS SQL`; choose a meaningful name and leave the rest as is.
 
 ## Setting up the VM
 The goal is:
