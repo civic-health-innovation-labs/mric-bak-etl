@@ -203,9 +203,9 @@ The basic logic of networking:
 
 ## Setting up the VM
 The goal is:
- - Install Microsoft Azure Storage Explorer [https://azure.microsoft.com/en-gb/products/storage/storage-explorer](see the Microsoft Azure Storage Explorer tool website here). This is not mandatory, but it makes things much easier as it installs .NET 6 together with the tool that is needed for each of the following tools; it also makes debugging easier.
- - Install **SqlPackage** tool [https://learn.microsoft.com/en-us/sql/tools/sqlpackage/sqlpackage?view=sql-server-ver16](see the Microsoft SqlPackage tool website here).
- - Install **AzCopy** [https://learn.microsoft.com/en-us/azure/storage/common/storage-ref-azcopy](see the Microsoft AzCopy website here).
+ - Install Microsoft Azure Storage Explorer [see the Microsoft Azure Storage Explorer tool website here](https://azure.microsoft.com/en-gb/products/storage/storage-explorer). This is not mandatory, but it makes things much easier as it installs .NET 6 together with the tool that is needed for each of the following tools; it also makes debugging easier.
+ - Install **SqlPackage** tool [see the Microsoft SqlPackage tool website here](https://learn.microsoft.com/en-us/sql/tools/sqlpackage/sqlpackage?view=sql-server-ver16).
+ - Install **AzCopy** [see the Microsoft AzCopy website here](https://learn.microsoft.com/en-us/azure/storage/common/storage-ref-azcopy).
  - Set up the **script for unloading bacpac** files.
  - Set up the logic that **calls the script periodically**.
 
