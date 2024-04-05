@@ -2,7 +2,7 @@
 Author: David Salac
 
 ## Introduction
-This document describes creating a virtual machine that works as a Microsoft SQL Server and a related local pipeline (running as a PowerShell script) that unloads BacPac archives into this machine from Azure Storage Account's blob. It also fully describes how to set up networking concerning FlowEHR architecture that uses this VM-based SQL Server as a data source for the bronze/silver/gold data pipeline.
+This document describes creating a virtual machine that works as a Microsoft SQL Server and a related local pipeline (running as a PowerShell script) that unloads Bak archives into this machine from Azure Storage Account's blob. It also fully describes how to set up networking concerning FlowEHR architecture that uses this VM-based SQL Server as a data source for the bronze/silver/gold data pipeline.
 
 ## Prerequisites
 You need to have:
@@ -11,7 +11,7 @@ You need to have:
 
 ## How to create a Virtual Machine with Microsoft SQL Server
 Click to Create an Azure Virtual Machine. Be aware of the following:
-1. As `Image`, select `SQL Server 2017 on Windows Server 2016`, click on `Select` and select `SQL Server 2017 Enterprise Windows Server 2016 - Gen2`. Set the rest as needed (or see below in the summary) - default values are alright.
+1. As `Image`, select `SQL Server 2019 Data Server`, click on `Select` and select `SQL Server 2019 Data Server - Gen1`. Set the rest as needed (or see below in the summary) - default values are alright.
 2. In the `Disk` tab, change the OS disk size to `128 GiB`. Choose `Standard SSD`.
 3. In the `Networking` tab, create a new Virtual Network, be aware that core **Address Space** (CIDR) must differ from the FlowEHR's one, but optimally also from the `mric-landing` one. Also, optionally, select `Delete public IP and NIC when VM is deleted`.
 4. Leave the `Management`, `Monitoring` and `Advanced` tabs with the default configuration.
@@ -212,7 +212,6 @@ The goal is:
  - Install Microsoft Azure Storage Explorer [see the Microsoft Azure Storage Explorer tool website here](https://azure.microsoft.com/en-gb/products/storage/storage-explorer). This is not mandatory, but it makes things much easier as it installs .NET 6 together with the tool that is needed for each of the following tools; it also makes debugging easier.
  - Install **SqlPackage** tool [see the Microsoft SqlPackage tool website here](https://learn.microsoft.com/en-us/sql/tools/sqlpackage/sqlpackage?view=sql-server-ver16).
  - Install **AzCopy** [see the Microsoft AzCopy website here](https://learn.microsoft.com/en-us/azure/storage/common/storage-ref-azcopy).
- - Set up the **script for unloading bacpac** files.
  - Set up the logic that **calls the script periodically**.
 
 ### How do I download things from inside the VM?
