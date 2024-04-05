@@ -115,4 +115,12 @@ sqlcmd `
 $latest_file_in_storage | Out-File -FilePath $PATH_LATEST_BAK
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-# TODO: REMOVE TEMP FILES
+# === REMOVE FILES IN TEMP ===
+Get-ChildItem $PATH_TEMP_FOLDER_BAK -File | Foreach-Object {
+    $fileBakName = $_.Name
+    if ($fileBakName.Contains(".bak")) {
+        $full_path_to_remove = $PATH_TEMP_FOLDER_BAK + $path_to_bak_to_unload
+        Remove-Item -Path $full_path_to_remove
+    }
+}
+# ============================
